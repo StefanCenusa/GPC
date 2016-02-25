@@ -89,6 +89,12 @@ void Display6() {
    glVertex2f(1.0, 0.75);
    glVertex2f(0.75, 0.75);
    glEnd();
+
+   glBegin(GL_TRIANGLES);
+   glVertex2f(-1.0, -1.0);
+   glVertex2f(-1.0, -0.75);
+   glVertex2f(-0.75, -0.75);
+   glEnd();
 }
 
 void Display7() {
@@ -106,28 +112,34 @@ void Display8() {
    // trasare poligon convex GL_QUADS : (v0,v1,v2, ..., v_{n-1})
    
 	glColor3f(0.2, 0.15, 0.88);
-	glLineWidth(80);
 	glBegin(GL_POLYGON);
-	glVertex2f(0.25, 0.5);
-	glVertex2f(-0.25, 0.5);
-	glVertex2f(-0.5, 0.0);
-	glVertex2f(-0.25, -0.5);
-	glVertex2f(0.25, -0.5);
-	glVertex2f(0.5, 0.0);
+	glVertex2f(0.30, 0.60);
+	glVertex2f(-0.30, 0.60);
+	glVertex2f(-0.70, 0.0);
+	glVertex2f(-0.30, -0.60);
+	glVertex2f(0.30, -0.60);
+	glVertex2f(0.70, 0.0);
 	glEnd();
 
+	glColor3f(1, 0.1, 0.1);
+	glBegin(GL_POLYGON);
+	glVertex2f(0.20, 0.40);
+	glVertex2f(-0.20, 0.40);
+	glVertex2f(-0.47, 0.0);
+	glVertex2f(-0.20, -0.40);
+	glVertex2f(0.20, -0.40);
+	glVertex2f(0.47, 0.0);
+	glEnd();
 
-   glColor3f(1, 0.1, 0.1);
-   glLineWidth(5);
-   glBegin(GL_POLYGON);
-   glVertex2f(0.25, 0.5);
-   glVertex2f(-0.25, 0.5);
-   glVertex2f(-0.5, 0.0);
-   glVertex2f(-0.25, -0.5);
-   glVertex2f(0.25, -0.5);
-   glVertex2f(0.5, 0.0);
-   glEnd();
-
+	glColor3f(1, 1, 1);
+	glBegin(GL_POLYGON);
+	glVertex2f(0.18, 0.38);
+	glVertex2f(-0.18, 0.38);
+	glVertex2f(-0.44, 0.0);
+	glVertex2f(-0.18, -0.38);
+	glVertex2f(0.18, -0.38);
+	glVertex2f(0.44, 0.0);
+	glEnd();
 }
 
 void Init(void) {
@@ -151,7 +163,7 @@ void Init(void) {
    //        GL_FRONT - primitive orientate direct
    //        GL_BACK  - primitive orientate invers
    //        GL_FRONT_AND_BACK  - ambele tipuri
-   glPolygonMode(GL_FRONT, GL_LINE);
+   glPolygonMode(GL_FRONT, GL_FILL);
 }
 
 void Display(void) {
