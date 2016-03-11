@@ -42,8 +42,6 @@ void Display3() {
 	glBegin(GL_LINE_STRIP);
 	glVertex2f(0.0, 1.0);
 
-	//TODO calcularea ok a ymax
-
 	for (double x = ratia; x < xmax; x += ratia) {
 		double x1, y1;
 		x1 = x / xmax;
@@ -56,7 +54,7 @@ void Display3() {
 
 //melcul lui Pascal (concoida cercului):
 void Display4() {
-	double xmax, ymax, xmin, ymin;
+	double xmax, ymax;
 	double a = 0.3, b = 0.2;
 	double pi = 4 * atan(1.0);
 	double ratia = 0.05;
@@ -74,6 +72,9 @@ void Display4() {
 		ymax = (ymax < fabs(y)) ? fabs(y) : ymax;
 	}
 
+	double max = xmax > ymax ? xmax : ymax;
+	max = max > 1 ? max : 1;
+
 	glColor3f(1, 0.1, 0.1);
 	glBegin(GL_LINE_LOOP);
 
@@ -82,8 +83,63 @@ void Display4() {
 		x = (2 * (a * cos(t) + b) * cos(t));
 		y = (2 * (a * cos(t) + b) * sin(t));
 
-		glVertex2f(x, y);
+		glVertex2f(x/max, y/max);
 	}
+	glEnd();
+}
+
+void Display5() {
+	double xmax = 0, ymax = 0;
+	double ratia = 5;
+	double a = 0.2;
+	double pi = 4 * atan(1);
+	int counter = 0;
+
+	glColor3f(1, 0.1, 0.1); // rosu
+	glBegin(GL_TRIANGLES);
+	for (double t = -pi / 2 + ratia; t < pi / 2; t += ratia) {
+		double x, y;
+
+		if (t != -pi / 6 && t != pi / 6) {
+			x = a / (4 * cos(t) * cos(t) - 3);
+			y = (a * tan(t)) / (4 * cos(t) * cos(t) - 3);
+
+			if (x < 0 && y > 0) {
+				if (x < -a || y > a) {
+					if (counter == 0) {
+						glVertex2f(-1, 1);
+						counter = 1;
+					}
+				}
+
+				counter++;
+				glVertex2f(x, y);
+
+				if (counter == 3) {
+					counter = 0;
+				}
+			}
+		}
+	}
+	glEnd();
+
+	glBegin(GL_LINE_STRIP);
+	glColor3f(0.2, 0.15, 0.88); // albastru
+	for (double t = -pi / 2 + ratia; t < pi / 2; t += ratia) {
+		double x, y;
+
+		if (t != -pi / 6 && t != pi / 6) {
+			x = a / (4 * cos(t) * cos(t) - 3);
+			y = (a * tan(t)) / (4 * cos(t) * cos(t) - 3);
+
+			if (x < 0 && y > 0) {
+				counter++;
+				glVertex2f(x, y);
+
+			}
+		}
+	}
+
 	glEnd();
 }
 
@@ -128,6 +184,9 @@ void Display7() {
 		ymax = (ymax < fabs(y)) ? fabs(y) : ymax;
 	}
 
+	double max = xmax > ymax ? xmax : ymax;
+	max = max > 1 ? max : 1;
+
 	glColor3f(1, 0.1, 0.1);
 	glBegin(GL_LINE_LOOP);
 	for (t = 0; t <= 2 * pi; t += ratia) {
@@ -136,7 +195,7 @@ void Display7() {
 		x = ((R + r) * cos(factor) - r * cos(t + factor));
 		y = ((R + r) * sin(factor) - r * sin(t + factor));
 
-		glVertex2f(x, y);
+		glVertex2f(x/max, y/max);
 	}
 	glEnd();
 }
@@ -189,6 +248,26 @@ void Display9() {
 	glColor3f(1, 0.1, 0.1); // rosu
 	glBegin(GL_LINE_STRIP);
 
+	double xmax, ymax;
+
+	xmax = ymax = 0;
+
+	for (t = -pi / 4 + ratia; t < pi / 4; t += ratia) {
+		double x, y;
+
+		r = a * sqrtf(2 * cos(2 * t));
+		x = r * cos(t);
+		y = r * sin(t);
+
+		xmax = (xmax < fabs(x)) ? fabs(x) : xmax;
+		ymax = (ymax < fabs(y)) ? fabs(y) : ymax;
+
+	}
+
+	double max = xmax > ymax ? xmax : ymax;
+	max = max > 1 ? max : 1;
+
+
 	for (t = pi / 4 - ratia; t > -pi / 4; t -= ratia) {
 		double x, y;
 
@@ -196,7 +275,7 @@ void Display9() {
 		x = r * cos(t);
 		y = r * sin(t);
 
-		glVertex2f(x, y);
+		glVertex2f(x/max, y/max);
 	}
 
 	for (t = -pi / 4 + ratia; t < pi / 4; t += ratia) {
@@ -206,7 +285,7 @@ void Display9() {
 		x = r * cos(t);
 		y = r * sin(t);
 
-		glVertex2f(x, y);
+		glVertex2f(x/max, y/max);
 	}
 	glEnd();
 }
@@ -235,6 +314,9 @@ void Display(void) {
 		break;
 	case '4':
 		Display4();
+		break;
+	case '5':
+		Display5();
 		break;
 	case '6':
 		Display6();
